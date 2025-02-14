@@ -1,20 +1,29 @@
-<ion-header [translucent]="true">
+<ion-header>
   <ion-toolbar>
-    <ion-title>
-      Blank
-    </ion-title>
+    <ion-title>Dashboarda</ion-title> <!-- Goiburuaren izenburua -->
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
-
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
+<ion-content class="ion-padding">
+  <ion-item>
+    <ion-input [(ngModel)]="city" placeholder="Hiria sartu" style="color: white;"></ion-input><!-- Erabiltzaileak hiria sartzeko eremua -->
+  </ion-item>
+  <ion-button expand="full" (click)="fetchWeather()">Kontsultatu</ion-button> <!-- Eguraldiaren datuak lortzeko botoia -->
+  <ion-button expand="full" (click)="generatePDF()" [disabled]="!weatherData">PDF-a sortu</ion-button> <!-- PDF sortzeko botoia -->
+  
+  <div *ngIf="weatherData" style="color: white;">
+    <h2>{{ city }}-ren datuak</h2> <!-- Hautatutako hiriaren datuak erakusteko sekzioa -->
+    <p>Oaringo tenperatura: {{ weatherData.list[0].main.temp }}°C</p>
+    <p>Hezetasuna: {{ weatherData.list[0].main.humidity }}%</p>
+    <p>Haizena: {{ weatherData.list[0].wind.speed }} m/s</p>
   </div>
+  
+  <h2 style="color: white;">Hurrengo egunetako prebisoa</h2>
+  <canvas #lineChart></canvas> <!-- Hurrengo egunetako tenperatura irudikatzeko grafikoa -->
+  
+  <h2 style="color: white;">Aurreko egunen tenperaturak.</h2>
+  <canvas #barChart></canvas> <!-- Aurreko egunen tenperatura grafikoa -->
+  
+  <h2 style="color: white;">Gaurko estatistikak</h2>
+  <canvas #radarChart></canvas> <!-- Gaurko eguraldi estatistikak irudikatzeko grafikoa -->
 </ion-content>
